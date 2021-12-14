@@ -6,11 +6,11 @@ class Ray {
 public:
 	//constructor
 	Ray() = default;
-	Ray(const Ray& r) {
+	constexpr Ray(const Ray& r) {
 		orginPos_ = r.orginPos_;
 		direction_ = r.direction_;
 	}
-	Ray(const Vec3& _pos ,const Vec3& _dir):orginPos_(_pos), direction_(_dir){}
+	constexpr Ray(const Vec3& _pos ,const Vec3& _dir):orginPos_(_pos), direction_(_dir){}
 	//funaction
 	inline Vec3 get_orginPos_() const { return orginPos_; }
 	inline Vec3 get_direction_() const { return direction_; }

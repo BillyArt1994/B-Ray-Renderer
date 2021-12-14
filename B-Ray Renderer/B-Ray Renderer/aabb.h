@@ -7,8 +7,7 @@ class AABB {
 public:
 	//constructor
 	AABB() = default;
-	AABB(Vec3 _minp,Vec3 _maxp):minpoint_(_minp), maxpoint_(_maxp){}
-
+	constexpr AABB(Vec3 _minp,Vec3 _maxp):minpoint_(_minp), maxpoint_(_maxp){}
 	//funaction
 	std::array<AABB, 8> GetEightSubAABB()const;
 	bool checkIfInside(const Vec3& point) const;

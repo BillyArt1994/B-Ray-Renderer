@@ -7,16 +7,16 @@ template<typename T>
 class Octree {
 public:
 	void OctreeBuild(vector<T>& data_ptr, AABB& bound, unsigned depth) {
-		if (length <= 1 || depth < 1)
+
+		if (data_ptr.size() <= 1 || depth < 1)
 		{
-			T* p = new T();
-			node<T>* node = new OcterNode<T>(p, length, bound, true);
+			node<T>* node = new OcterNode<T>(data_ptr,bound, true);
 			return node;
 		}
 
 		OcterNode<T>* cur = new OcterNode<T>(bound, false);
 		array<AABB, 8> subBounding = bound.getEightSubAABB();
-		vector<T> objArray[8];
+		vector<T> dataArray[8];
 
 		for (unsigned i = 0; i < length; i++)
 		{
@@ -24,7 +24,7 @@ public:
 			{
 				if (subBounding[j].checkIfInside(data_ptr[i]))
 				{
-					objArray[j].push_back(data_ptr[i]);
+					dataArray[j].push_back(data_ptr[i]);
 				}
 			}
 		}
@@ -58,6 +58,7 @@ private:
 	struct node {
 		//constructor
 		node(std::vector<T>& _data, AABB& _bound, bool _is_leaf) :data(_data), bound(_bound), is_leaf(_is_leaf){}
+		node(AABB& _bound, bool _is_leaf) :bound(_bound), is_leaf(_is_leaf) {}
 		//data
 		std::vector<T> data;
 		AABB bound;

@@ -7,7 +7,7 @@ struct Vertex
 {
 	//constructor
 	Vertex() = default;
-	Vertex(const Vec3& pos):position(pos){}
+	constexpr Vertex(const Vec3& pos):position(pos){}
 	//date
 	Vec3 position;
 	Vec3 normal;
