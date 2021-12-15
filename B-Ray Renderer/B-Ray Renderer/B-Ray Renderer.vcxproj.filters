@@ -21,10 +21,10 @@
     <ClCompile Include="mesh.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="triangle.cpp">
+    <ClCompile Include="bounding.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="aabb.cpp">
+    <ClCompile Include="hittable.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +59,7 @@
     <ClInclude Include="bmath.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="aabb.h">
+    <ClInclude Include="bounding.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="hittable.h">

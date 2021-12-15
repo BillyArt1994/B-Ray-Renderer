@@ -6,9 +6,9 @@ class Transform {
 public:
 	//constructor
 	Transform() = default;
-	constexpr Transform(const Vec3& pos, const Vec3& rot, const Vec3& scale) :
+	Transform(const Vec3& pos, const Vec3& rot, const Vec3& scale) :
 		position_(pos), rotation_(rot), scale_(scale) {}
-	constexpr Transform(const Vec3& pos) :position_(pos) {}
+	Transform(const Vec3& pos) :position_(pos) {}
 	//funaction
 
 	//data

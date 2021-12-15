@@ -9,7 +9,7 @@ class Triangle {
 public:
 	//constructor
 	Triangle() = default;
-	constexpr Triangle (const unsigned& _v1, const unsigned& _v2, const unsigned& _v3):idx1_(_v1), idx2_(_v2),idx3_(_v3){}
+	Triangle (const unsigned& _v1, const unsigned& _v2, const unsigned& _v3):idx1_(_v1), idx2_(_v2),idx3_(_v3){}
 	//funaction
 
 	// data

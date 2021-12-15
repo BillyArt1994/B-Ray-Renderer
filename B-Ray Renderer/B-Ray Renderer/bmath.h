@@ -10,5 +10,40 @@ constexpr float Dot(const Vec3& a, const Vec3& b) {
 	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
+template<typename T>
+constexpr T Max(const T& x, const T& y) {
+	return x > y ? x : y;
+}
+
+template<typename T>
+constexpr T Max(const T& x, const T& y, const T& z) {
+	return x > y ? (x > z ? x : z) : (y > z ? y : z);
+}
+
+template<typename T>
+constexpr T Min(const T& x, const T& y) {
+	return x > y ? x : y;
+}
+
+template<typename T>
+constexpr T Min(const T& x, const T& y , const T& z) {
+	return x < y ? (x < z ? x : z) : (y < z ? y : z);
+}
+
+inline float Distance(const Vec3& a ,const Vec3& b) {
+	return sqrt(Dot(a,b));
+}
+
+constexpr float clamp(const float& x, const float& min, const float& max) {
+	if (x < min) return min;
+	if (x > max) return max;
+	return x;
+}
+
+constexpr float saturate(const float& x) {
+	if (x > 1)return 1.0f;
+	if (x < 0)return 0.0f;
+	return x;
+}
 #endif // !BMATH_H_H
 

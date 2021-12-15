@@ -1,72 +1,81 @@
 #ifndef  OCTREE_H_
 #define OCTREE_H_
-#include "aabb.h"
+#include "bounding.h"
 #include <vector>
 
 template<typename T>
 class Octree {
 public:
-	void OctreeBuild(vector<T>& data_ptr, AABB& bound, unsigned depth) {
+	Octree() = default;
+	Octree(const Mesh* _mesh_ptr_) :mesh_ptr_(_mesh_ptr_) {}
 
-		if (data_ptr.size() <= 1 || depth < 1)
+	void OctreeBuild(const std::vector<T>& data_ptr, const BoxBounding& bound, const unsigned depth) {
+		//获得数据大小
+		int length = data_ptr.size();
+
+		//如果数据低于设置的最大值或者八叉树深度低于1返回叶子节点
+		if (length <= 1 || depth < 1)
 		{
-			node<T>* node = new OcterNode<T>(data_ptr,bound, true);
-			return node;
+			node* leaf_node = new node(data_ptr,bound, true);
+			return leaf_node;
 		}
 
-		OcterNode<T>* cur = new OcterNode<T>(bound, false);
-		array<AABB, 8> subBounding = bound.getEightSubAABB();
-		vector<T> dataArray[8];
+		node* curnode = new node(bound, true);
+		//获得八个子包围盒
+		std::array<BoxBounding, 8> subBounding = bound.GetEightSubBoxBounding();
+		//创建八个数据数组
+		std::vector<T> data_array[8];
 
-		for (unsigned i = 0; i < length; i++)
+		for (size_t i = 0; i < length; i++)
 		{
-			for (unsigned j = 0; j < 8; j++)
+			for (size_t j = 0; j < 8; j++)
 			{
-				if (subBounding[j].checkIfInside(data_ptr[i]))
+				if (subBounding[j].CheckIfInside(data_ptr[i]))
 				{
-					dataArray[j].push_back(data_ptr[i]);
+					data_array[j].push_back(data_ptr[i]);
 				}
 			}
 		}
 
 		if (depth <= 31)
 		{
-			cur->m_children[7] = octreeBuild(objArray[0], subBounding[0], depth - 1);
-			cur->m_children[6] = octreeBuild(objArray[1], subBounding[1], depth - 1);
-			cur->m_children[5] = octreeBuild(objArray[2], subBounding[2], depth - 1);
-			cur->m_children[4] = octreeBuild(objArray[3], subBounding[3], depth - 1);
-			cur->m_children[3] = octreeBuild(objArray[4], subBounding[4], depth - 1);
-			cur->m_children[2] = octreeBuild(objArray[5], subBounding[5], depth - 1);
-			cur->m_children[1] = octreeBuild(objArray[6], subBounding[6], depth - 1);
-			cur->m_children[0] = octreeBuild(objArray[7], subBounding[7], depth - 1);
+			curnode->child_node[7] = OctreeBuild(data_array[0], subBounding[0], depth - 1);
+			curnode->child_node[6] = OctreeBuild(data_array[1], subBounding[1], depth - 1);
+			curnode->child_node[5] = OctreeBuild(data_array[2], subBounding[2], depth - 1);
+			curnode->child_node[4] = OctreeBuild(data_array[3], subBounding[3], depth - 1);
+			curnode->child_node[3] = OctreeBuild(data_array[4], subBounding[4], depth - 1);
+			curnode->child_node[2] = OctreeBuild(data_array[5], subBounding[5], depth - 1);
+			curnode->child_node[1] = OctreeBuild(data_array[6], subBounding[6], depth - 1);
+			curnode->child_node[0] = OctreeBuild(data_array[7], subBounding[7], depth - 1);
 		}
 		else
 		{
-			cur->m_children[0] = octreeBuild(objArray[0], subBounding[0], depth - 1);
-			cur->m_children[1] = octreeBuild(objArray[1], subBounding[1], depth - 1);
-			cur->m_children[2] = octreeBuild(objArray[2], subBounding[2], depth - 1);
-			cur->m_children[3] = octreeBuild(objArray[3], subBounding[3], depth - 1);
-			cur->m_children[4] = octreeBuild(objArray[4], subBounding[4], depth - 1);
-			cur->m_children[5] = octreeBuild(objArray[5], subBounding[5], depth - 1);
-			cur->m_children[6] = octreeBuild(objArray[6], subBounding[6], depth - 1);
-			cur->m_children[7] = octreeBuild(objArray[7], subBounding[7], depth - 1);
+			curnode->child_node[0] = OctreeBuild(data_array[0], subBounding[0], depth - 1);
+			curnode->child_node[1] = OctreeBuild(data_array[1], subBounding[1], depth - 1);
+			curnode->child_node[2] = OctreeBuild(data_array[2], subBounding[2], depth - 1);
+			curnode->child_node[3] = OctreeBuild(data_array[3], subBounding[3], depth - 1);
+			curnode->child_node[4] = OctreeBuild(data_array[4], subBounding[4], depth - 1);
+			curnode->child_node[5] = OctreeBuild(data_array[5], subBounding[5], depth - 1);
+			curnode->child_node[6] = OctreeBuild(data_array[6], subBounding[6], depth - 1);
+			curnode->child_node[7] = OctreeBuild(data_array[7], subBounding[7], depth - 1);
 		}
-		return cur;
+		return curnode;
 	}
 
 private:
 	struct node {
 		//constructor
-		node(std::vector<T>& _data, AABB& _bound, bool _is_leaf) :data(_data), bound(_bound), is_leaf(_is_leaf){}
-		node(AABB& _bound, bool _is_leaf) :bound(_bound), is_leaf(_is_leaf) {}
+		node() = default;
+		node(std::vector<T>& _data, BoxBounding& _bound, bool _is_leaf) :data(_data), bound(_bound), is_leaf(_is_leaf) {}
+		node(const BoxBounding& _bound, const bool& _is_leaf) :bound(_bound), is_leaf(_is_leaf) {}
 		//data
 		std::vector<T> data;
-		AABB bound;
+		BoxBounding bound;
 		node* child_node[8]{ nullptr };
 		bool is_leaf = false;
 	};
-
-	node* rootnode_ = nullptr;
+	node* root_node_ptr_ = nullptr;
+	Mesh* mesh_ptr_ = nullptr;
 };
 
 #endif // ! OCTREE_H_
