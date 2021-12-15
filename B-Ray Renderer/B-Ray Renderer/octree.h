@@ -39,25 +39,25 @@ public:
 
 		if (depth <= 31)
 		{
-			curnode->child_node[7] = OctreeBuild(data_array[0], subBounding[0], depth - 1);
-			curnode->child_node[6] = OctreeBuild(data_array[1], subBounding[1], depth - 1);
-			curnode->child_node[5] = OctreeBuild(data_array[2], subBounding[2], depth - 1);
-			curnode->child_node[4] = OctreeBuild(data_array[3], subBounding[3], depth - 1);
-			curnode->child_node[3] = OctreeBuild(data_array[4], subBounding[4], depth - 1);
-			curnode->child_node[2] = OctreeBuild(data_array[5], subBounding[5], depth - 1);
-			curnode->child_node[1] = OctreeBuild(data_array[6], subBounding[6], depth - 1);
-			curnode->child_node[0] = OctreeBuild(data_array[7], subBounding[7], depth - 1);
+			curnode->sub_node[7] = OctreeBuild(data_array[0], subBounding[0], depth - 1);
+			curnode->sub_node[6] = OctreeBuild(data_array[1], subBounding[1], depth - 1);
+			curnode->sub_node[5] = OctreeBuild(data_array[2], subBounding[2], depth - 1);
+			curnode->sub_node[4] = OctreeBuild(data_array[3], subBounding[3], depth - 1);
+			curnode->sub_node[3] = OctreeBuild(data_array[4], subBounding[4], depth - 1);
+			curnode->sub_node[2] = OctreeBuild(data_array[5], subBounding[5], depth - 1);
+			curnode->sub_node[1] = OctreeBuild(data_array[6], subBounding[6], depth - 1);
+			curnode->sub_node[0] = OctreeBuild(data_array[7], subBounding[7], depth - 1);
 		}
 		else
 		{
-			curnode->child_node[0] = OctreeBuild(data_array[0], subBounding[0], depth - 1);
-			curnode->child_node[1] = OctreeBuild(data_array[1], subBounding[1], depth - 1);
-			curnode->child_node[2] = OctreeBuild(data_array[2], subBounding[2], depth - 1);
-			curnode->child_node[3] = OctreeBuild(data_array[3], subBounding[3], depth - 1);
-			curnode->child_node[4] = OctreeBuild(data_array[4], subBounding[4], depth - 1);
-			curnode->child_node[5] = OctreeBuild(data_array[5], subBounding[5], depth - 1);
-			curnode->child_node[6] = OctreeBuild(data_array[6], subBounding[6], depth - 1);
-			curnode->child_node[7] = OctreeBuild(data_array[7], subBounding[7], depth - 1);
+			curnode->sub_node[0] = OctreeBuild(data_array[0], subBounding[0], depth - 1);
+			curnode->sub_node[1] = OctreeBuild(data_array[1], subBounding[1], depth - 1);
+			curnode->sub_node[2] = OctreeBuild(data_array[2], subBounding[2], depth - 1);
+			curnode->sub_node[3] = OctreeBuild(data_array[3], subBounding[3], depth - 1);
+			curnode->sub_node[4] = OctreeBuild(data_array[4], subBounding[4], depth - 1);
+			curnode->sub_node[5] = OctreeBuild(data_array[5], subBounding[5], depth - 1);
+			curnode->sub_node[6] = OctreeBuild(data_array[6], subBounding[6], depth - 1);
+			curnode->sub_node[7] = OctreeBuild(data_array[7], subBounding[7], depth - 1);
 		}
 		return curnode;
 	}
@@ -71,7 +71,7 @@ private:
 		//data
 		std::vector<T> data;
 		BoxBounding bound;
-		node* child_node[8]{ nullptr };
+		node* sub_nodevbk[8]{ nullptr };
 		bool is_leaf = false;
 	};
 	node* root_node_ptr_ = nullptr;

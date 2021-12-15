@@ -6,9 +6,9 @@
 struct Vec3 {
 	//constructor
 	Vec3() = default;
-	constexpr Vec3(const float& _x, const float& _y, const float& _z) :x(_x), y(_y), z(_z) {}
-	constexpr Vec3(const Vec3& b) :x(b.x), y(b.y), z(b.z) {}
-	constexpr explicit  Vec3(const float& _value) :x(_value), y(_value), z(_value) {}
+	Vec3(const float _x, const float _y, const float _z) :x(_x), y(_y), z(_z) {}
+	Vec3(const Vec3& b) : x(b.x), y(b.y), z(b.z) {}
+	explicit  Vec3(const float _value) :x(_value), y(_value), z(_value) {}
 
 	//operator
 	inline Vec3 operator +(const Vec3& b) const {
@@ -55,44 +55,44 @@ struct Vec3 {
 		return *this;
 	}
 
-	inline Vec3 operator + (const float& b)const {
+	inline Vec3 operator + (const float b)const {
 		return Vec3(x + b, y + b, z + b);
 	}
 
-	inline Vec3 operator - (const float& b)const {
+	inline Vec3 operator - (const float b)const {
 		return Vec3(x - b, y - b, z - b);
 	}
 
-	inline Vec3 operator * (const float& b)const {
+	inline Vec3 operator * (const float b)const {
 		return Vec3(x * b, y * b, z * b);
 	}
 
-	inline Vec3 operator / (const float& b)const {
+	inline Vec3 operator / (const float b)const {
 		return Vec3(x / b, y / b, z / b);
 	}
 
-	inline Vec3& operator += (const float& b) {
+	inline Vec3& operator += (const float b) {
 		x += b;
 		y += b;
 		z += b;
 		return *this;
 	}
 
-	inline Vec3& operator -= (const float& b) {
+	inline Vec3& operator -= (const float b) {
 		x -= b;
 		y -= b;
 		z -= b;
 		return *this;
 	}
 
-	inline Vec3& operator *= (const float& b) {
+	inline Vec3& operator *= (const float b) {
 		x *= b;
 		y *= b;
 		z *= b;
 		return *this;
 	}
 
-	inline Vec3& operator /= (const float& b) {
+	inline Vec3& operator /= (const float b) {
 		x /= b;
 		y /= b;
 		z /= b;
@@ -116,19 +116,19 @@ struct Vec3 {
 
 };
 
-inline Vec3 operator -(const float& a, const Vec3& b) {
+inline Vec3 operator -(const float a, const Vec3& b) {
 	return Vec3(a - b.x, a - b.y, a - b.z);
 }
 
-inline Vec3 operator +(const float& a, const Vec3& b) {
-	return Vec3(a + b.x, a + b.y, a + b.z);
+inline Vec3 operator +(const float a, const Vec3& b) {
+	return b + a;
 }
 
-inline Vec3 operator *(const float& a, const Vec3& b) {
+inline Vec3 operator *(const float a, const Vec3& b) {
 	return b * a;
 }
 
-inline Vec3 operator /(const float& a, const Vec3& b) {
+inline Vec3 operator /(const float a, const Vec3& b) {
 	return Vec3(a / b.x, a / b.y, a / b.z);
 }
 
