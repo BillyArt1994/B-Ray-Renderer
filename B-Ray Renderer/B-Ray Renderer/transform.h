@@ -15,7 +15,6 @@ public:
 	Vec3 position_;
 	Vec3 rotation_;
 	Vec3 scale_;
-
 };
 
 #endif // !TRANSFORM_H_

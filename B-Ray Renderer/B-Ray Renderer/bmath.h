@@ -2,12 +2,17 @@
 #define BMATH_H_
 #include "vec3.h"
 
-constexpr Vec3 Cross(const Vec3& a,const Vec3& b) {
+inline Vec3 Cross(const Vec3& a,const Vec3& b) {
 	return Vec3(a.y * b.z - b.y * a.z, a.z * b.x - b.z * a.x, a.x * b.y - b.x * a.y);
 }
 
-constexpr float Dot(const Vec3& a, const Vec3& b) {
+inline float Dot(const Vec3& a, const Vec3& b) {
 	return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+
+inline float Distance(const Vec3& a, const Vec3& b) {
+	return sqrt(Dot(a, b));
 }
 
 template<typename T>
@@ -28,10 +33,6 @@ constexpr T Min(const T& x, const T& y) {
 template<typename T>
 constexpr T Min(const T& x, const T& y , const T& z) {
 	return x < y ? (x < z ? x : z) : (y < z ? y : z);
-}
-
-inline float Distance(const Vec3& a ,const Vec3& b) {
-	return sqrt(Dot(a,b));
 }
 
 constexpr float clamp(const float& x, const float& min, const float& max) {

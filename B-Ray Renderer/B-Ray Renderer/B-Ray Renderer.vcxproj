@@ -145,6 +145,7 @@
     <ClCompile Include="hittable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="octree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bounding.h" />

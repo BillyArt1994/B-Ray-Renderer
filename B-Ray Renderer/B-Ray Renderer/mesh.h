@@ -14,11 +14,11 @@ public:
 	Mesh() = default;
 	Mesh(const std::string filename);
 	//function
-	inline int get_face_count_()const {
+	inline rsize_t get_face_count_()const {
 		return triangle_list_.size() / 3;
 	}
 
-	inline int get_vertex_count_()const {
+	inline rsize_t get_vertex_count_()const {
 		return vertex_list_.size();
 	}
 	//data

@@ -1,22 +1,51 @@
 #ifndef  OCTREE_H_
 #define OCTREE_H_
 #include "bounding.h"
+#include "hittable.h"
 #include <vector>
 
-template<typename T>
 class Octree {
-public:
-	Octree() = default;
-	Octree(const Mesh* _mesh_ptr_) :mesh_ptr_(_mesh_ptr_) {}
+private:
+	struct node {
+		//constructor
+		node() = default;
+		node(const std::vector<Hittable>& _data,const BoxBounding& _bound,const bool _is_leaf) :data(_data), bound(_bound), is_leaf(_is_leaf) {}
+		node(const BoxBounding& _bound, const bool& _is_leaf) :bound(_bound), is_leaf(_is_leaf) {}
+		//funaction
+		void recursiveDestory(node* node) {
+			if (node == nullptr)
+				return;
+			recursiveDestory(node->sub_node[0]);
+			recursiveDestory(node->sub_node[1]);
+			recursiveDestory(node->sub_node[2]);
+			recursiveDestory(node->sub_node[3]);
+			recursiveDestory(node->sub_node[4]);
+			recursiveDestory(node->sub_node[5]);
+			recursiveDestory(node->sub_node[6]);
+			recursiveDestory(node->sub_node[7]);
 
-	void OctreeBuild(const std::vector<T>& data_ptr, const BoxBounding& bound, const unsigned depth) {
+			delete node;
+			node = nullptr;
+		}
+		//destructor function
+		~node() {
+			recursiveDestory(this);
+		}
+		//data
+		std::vector<Hittable> data;
+		BoxBounding bound;
+		node* sub_node[8]{ nullptr };
+		bool is_leaf = false;
+	};
+
+	node* OctreeBuild(const std::vector<Hittable>& data_ptr, const BoxBounding& bound, const unsigned depth) {
 		//获得数据大小
 		int length = data_ptr.size();
 
 		//如果数据低于设置的最大值或者八叉树深度低于1返回叶子节点
 		if (length <= 1 || depth < 1)
 		{
-			node* leaf_node = new node(data_ptr,bound, true);
+			node* leaf_node = new node(data_ptr, bound, true);
 			return leaf_node;
 		}
 
@@ -24,13 +53,13 @@ public:
 		//获得八个子包围盒
 		std::array<BoxBounding, 8> subBounding = bound.GetEightSubBoxBounding();
 		//创建八个数据数组
-		std::vector<T> data_array[8];
+		std::vector<Hittable> data_array[8];
 
 		for (size_t i = 0; i < length; i++)
 		{
 			for (size_t j = 0; j < 8; j++)
 			{
-				if (subBounding[j].CheckIfInside(data_ptr[i]))
+				if (subBounding[j].CheckIfInside(data_ptr[i].bound_))
 				{
 					data_array[j].push_back(data_ptr[i]);
 				}
@@ -62,20 +91,16 @@ public:
 		return curnode;
 	}
 
-private:
-	struct node {
-		//constructor
-		node() = default;
-		node(std::vector<T>& _data, BoxBounding& _bound, bool _is_leaf) :data(_data), bound(_bound), is_leaf(_is_leaf) {}
-		node(const BoxBounding& _bound, const bool& _is_leaf) :bound(_bound), is_leaf(_is_leaf) {}
-		//data
-		std::vector<T> data;
-		BoxBounding bound;
-		node* sub_nodevbk[8]{ nullptr };
-		bool is_leaf = false;
-	};
+public:
+	Octree() = default;
+
+	void BuildTree(const std::vector<Hittable>& data_ptr, const BoxBounding& bound, const unsigned depth) {
+		root_node_ptr_ = OctreeBuild(data_ptr, bound, depth);
+	}
+
+	bool Intersect(const Ray& r,);
+
 	node* root_node_ptr_ = nullptr;
-	Mesh* mesh_ptr_ = nullptr;
 };
 
 #endif // ! OCTREE_H_

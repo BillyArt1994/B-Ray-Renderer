@@ -27,6 +27,9 @@
     <ClCompile Include="hittable.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="octree.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mesh.h">
