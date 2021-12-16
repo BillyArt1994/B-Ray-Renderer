@@ -71,5 +71,8 @@
     <ClInclude Include="octree.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="engine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
