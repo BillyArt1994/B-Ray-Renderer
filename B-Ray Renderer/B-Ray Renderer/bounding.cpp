@@ -24,11 +24,6 @@ std::array<BoxBounding, 8> BoxBounding::GetEightSubBoxBounding()const {
 	return subBound;
 }
 
-bool BoxBounding::CheckIfInside(const SphereBounding& _bounding) const {
-
-	return true;
-}
-
 bool BoxBounding::CheckIfInside(const Vec3& point) const {
 	if (point.x > maxpoint_.x || point.y > maxpoint_.y || point.z > maxpoint_.z ||
 		point.x < minpoint_.x || point.y < minpoint_.y || point.z < minpoint_.z) return false;
