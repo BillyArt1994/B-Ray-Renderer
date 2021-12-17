@@ -5,7 +5,10 @@
 #include "camera.h"
 #include "svpng.h"
 
-int main() {
+int main(int argc, char* argv[]) {
+
+
+	/*
 	//image
 	const int nx = 300;
 	const int ny = 300;
@@ -38,5 +41,6 @@ int main() {
 
 	FILE* fp = fopen("render.png", "wb");
 	svpng(fp, nx, ny, rgb, 0);
+	*/
 	return 0;
 }
