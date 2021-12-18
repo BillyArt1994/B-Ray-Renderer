@@ -53,5 +53,4 @@ void DisplayManager::UpdateBuffer(unsigned char* buffer) {
 	memcpy(sdl_surface_->pixels, buffer, path);
 	SDL_UnlockSurface(sdl_surface_);
 	SDL_UpdateWindowSurface(sdl_window_);
-	
 }

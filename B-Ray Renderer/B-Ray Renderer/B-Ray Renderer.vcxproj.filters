@@ -30,6 +30,27 @@
     <ClCompile Include="octree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="engine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="displayManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="inputManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="renderManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="render.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mesh.h">
@@ -72,6 +93,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="engine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="displayManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inputManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="renderManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,7 +3,10 @@
 
 class Render
 {
-
+public:
+	void build
+private:
+	unsigned char* buffer_ = nullptr;
 };
 
 

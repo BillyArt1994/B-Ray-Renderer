@@ -40,15 +40,15 @@ Mesh::Mesh(const std::string filename) {
 
 		case 'f':
 			int vertex_index[3], uv_index[3], normal_index[3];
-			sscanf_s(c_line, "f %i/%i/%i %i/%i/%i %i/%i/%i",
+			sscanf_s(c_line, "f %u/%u/%u %u/%u/%u %u/%u/%u",
 				&vertex_index[0], &uv_index[0], &normal_index[0],
 				&vertex_index[1], &uv_index[1], &normal_index[1],
 				&vertex_index[2], &uv_index[2], &normal_index[2]);
 			triangle_list_.push_back(Triangle(vertex_index[0], vertex_index[1], vertex_index[2]));
 			for (size_t i = 0; i < 3; i++)
 			{
-				vertex_list_[vertex_index[i]-=1].uv = texcoordlist[uv_index[i]-=1];
-				vertex_list_[vertex_index[i]-=1].normal = normallist[normal_index[i]-=1];
+				vertex_list_[vertex_index[i]-=1u].uv = texcoordlist[uv_index[i]-=1u];
+				vertex_list_[vertex_index[i]-=1u].normal = normallist[normal_index[i]-=1u];
 			}
 			break;
 		}

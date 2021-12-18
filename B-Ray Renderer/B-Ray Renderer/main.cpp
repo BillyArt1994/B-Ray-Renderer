@@ -6,6 +6,7 @@ int main(int argc, char* argv[]) {
 	Engine BRay;
 	if (BRay.StartUp())
 	{
+		//内部执行循环渲染
 		BRay.Run();
 	}
 	else

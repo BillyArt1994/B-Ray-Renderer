@@ -145,21 +145,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bounding.cpp" />
+    <ClCompile Include="displayManager.cpp" />
+    <ClCompile Include="engine.cpp" />
     <ClCompile Include="hittable.cpp" />
+    <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="octree.cpp" />
+    <ClCompile Include="render.cpp" />
+    <ClCompile Include="renderManager.cpp" />
+    <ClCompile Include="scene.cpp" />
+    <ClCompile Include="sceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bounding.h" />
     <ClInclude Include="bmath.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="displayManager.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="hittable.h" />
+    <ClInclude Include="inputManager.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="octree.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="render.h" />
+    <ClInclude Include="renderManager.h" />
+    <ClInclude Include="scene.h" />
+    <ClInclude Include="sceneManager.h" />
     <ClInclude Include="svpng.h" />
     <ClInclude Include="transform.h" />
     <ClInclude Include="triangle.h" />

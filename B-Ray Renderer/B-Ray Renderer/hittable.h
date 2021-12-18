@@ -8,7 +8,7 @@ public:
 	//constructor
 	Hittable(const Mesh* _mesh_ptr):mesh_ptr_(_mesh_ptr){}
 	//funaction
-	// 
+	
 	//data
 	Bounding bound_;
 	const Mesh* mesh_ptr_= nullptr; 
