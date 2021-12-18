@@ -8,13 +8,12 @@ public:
 	//constructor
 	DisplayManager() = default;
 	//data
-	constexpr static int SCREEN_WIDTH = 1280; //640 1280
-	constexpr static int SCREEN_HEIGHT = 720; //480 720
-	constexpr static float SCREEN_ASPECT_RATIO = SCREEN_WIDTH / (float)SCREEN_HEIGHT;
+	static int SCREEN_WIDTH;
+	static int SCREEN_HEIGHT;
+	static float SCREEN_ASPECT_RATIO;
 	//funaction
 	bool StartUp();
 	bool ShutDown();
-
 	void UpdateBuffer(unsigned char* buffer);
 private:
 	bool StartSDL();

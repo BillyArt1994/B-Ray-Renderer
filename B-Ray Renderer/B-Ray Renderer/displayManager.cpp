@@ -6,7 +6,7 @@ bool DisplayManager::StartUp() {
 	{
 		flag = false;
 	}
-	else if(!CreateWindow())
+	else if (!CreateWindow())
 	{
 		flag = false;
 	}
@@ -22,7 +22,7 @@ bool DisplayManager::StartSDL() {
 	{
 		printf("SDL组件初始化失败: %s\n", SDL_GetError());
 		return  false;
-	}	
+	}
 	return true;
 }
 
@@ -49,8 +49,9 @@ bool DisplayManager::CreateWindow() {
 
 void DisplayManager::UpdateBuffer(unsigned char* buffer) {
 	SDL_LockSurface(sdl_surface_);
-	const int path = ((SCREEN_WIDTH > SCREEN_WIDTH) ? SCREEN_WIDTH : SCREEN_WIDTH)*3;
-	memcpy(sdl_surface_->pixels, buffer,path);
+	const int path = SCREEN_WIDTH * SCREEN_WIDTH * 3;
+	memcpy(sdl_surface_->pixels, buffer, path);
 	SDL_UnlockSurface(sdl_surface_);
 	SDL_UpdateWindowSurface(sdl_window_);
+	
 }
