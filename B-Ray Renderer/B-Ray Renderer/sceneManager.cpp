@@ -1,8 +1,8 @@
 #include "sceneManager.h"
 
 bool SceneManager::StartUp() {
-#if 0
-	current_Scene_ = new Scene(current_scene_id_);
+#if 1
+	current_scene_ = new Scene(current_scene_id_);
 #endif // 0
 
 }
@@ -15,6 +15,6 @@ void SceneManager::ShutDown() {
 
 }
   
-void SceneManager::Update(unsigned int deltaT) {
+void SceneManager::Update(const unsigned int deltaT) const {
 	
 }

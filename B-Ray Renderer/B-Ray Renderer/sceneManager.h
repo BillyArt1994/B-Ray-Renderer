@@ -10,9 +10,8 @@ public:
 	//funaction
 	bool StartUp();
 	void ShutDown();
-	void Update(unsigned int deltaT);
+	void Update(const unsigned int deltaT)const ;
 	void SwitchScene();
-
 	Scene* get_current_scene_() const{return current_scene_;}
 private:
 	//data

@@ -15,7 +15,7 @@ public:
 	Mesh(const std::string filename);
 	//function
 	inline rsize_t get_face_count_()const {
-		return triangle_list_.size() / 3;
+		return triangle_list_.size() / 3u;
 	}
 
 	inline rsize_t get_vertex_count_()const {

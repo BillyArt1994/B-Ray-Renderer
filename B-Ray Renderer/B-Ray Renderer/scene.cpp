@@ -1,9 +1,15 @@
 #include "scene.h"
 
-Scene::Scene(unsigned _id) {
+bool Scene::StartUp(unsigned _id) {
 	switch (_id)
 	{
 	case 1:
+
+		break;
+	case 2:
+
+		break;
+	case 3:
 
 		break;
 	}

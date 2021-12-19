@@ -5,8 +5,8 @@ class Scene {
 public:
 	//constructor
 	Scene() = default;
-	Scene(unsigned _id);
 	//funaction
+	bool StartUp(unsigned _id);
 	void Update(unsigned int _deltaT);
 	//data
 
