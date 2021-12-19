@@ -11,6 +11,7 @@ public:
 	bool StartUp(SceneManager& _sceneManager, DisplayManager& _displayManager);
 	void ShutDown();
 	void Render();
+
 private:
 	SceneManager* sceneManager_;
 	DisplayManager* displayManager_;

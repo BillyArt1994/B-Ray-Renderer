@@ -53,5 +53,6 @@ Mesh::Mesh(const std::string filename) {
 			break;
 		}
 	}
+
 	ifs.close();
 }

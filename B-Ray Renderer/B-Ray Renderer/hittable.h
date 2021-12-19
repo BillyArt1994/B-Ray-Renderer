@@ -10,7 +10,7 @@ public:
 	//funaction
 	
 	//data
-	Bounding bound_;
+	Bounding<> bound_;
 	const Mesh* mesh_ptr_= nullptr; 
 };
 

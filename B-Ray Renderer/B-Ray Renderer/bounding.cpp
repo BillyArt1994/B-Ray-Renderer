@@ -2,25 +2,23 @@
 
 std::array<BoxBounding, 8> BoxBounding::GetEightSubBoxBounding()const {
 	std::array<BoxBounding, 8> subBound;
-	const float length = (maxpoint_.x - minpoint_.x) / 2;
-	const Vec3 maxPfourB = maxpoint_;
-	const Vec3 minPfourB = maxpoint_ - length;
-	subBound[0].maxpoint_ = maxPfourB;
-	subBound[0].minpoint_ = minPfourB;
-	subBound[1].maxpoint_ = maxPfourB - Vec3(length, 0, 0);
-	subBound[1].minpoint_ = minPfourB - Vec3(length, 0, 0);
-	subBound[2].maxpoint_ = maxPfourB - Vec3(0, length, 0);
-	subBound[2].minpoint_ = minPfourB - Vec3(0, length, 0);
-	subBound[3].maxpoint_ = maxPfourB - Vec3(length, length, 0);
-	subBound[3].minpoint_ = minPfourB - Vec3(length, length, 0);
-	subBound[4].maxpoint_ = maxPfourB - Vec3(0, 0, length);
-	subBound[4].minpoint_ = minPfourB - Vec3(0, 0, length);
-	subBound[5].maxpoint_ = maxPfourB - Vec3(length, 0, length);
-	subBound[5].minpoint_ = minPfourB - Vec3(length, 0, length);
-	subBound[6].maxpoint_ = maxPfourB - Vec3(0, length, length);
-	subBound[6].minpoint_ = minPfourB - Vec3(0, length, length);
-	subBound[7].maxpoint_ = maxPfourB - Vec3(length, length, length);
-	subBound[7].minpoint_ = minPfourB - Vec3(length, length, length);
+	const float quarter_length = length_ * 0.25f;
+	subBound[0].cet_pos_ = cet_pos_ + quarter_length;
+	subBound[0].length_ = quarter_length;
+	subBound[1].cet_pos_ = cet_pos_ + Vec3(-quarter_length, quarter_length, quarter_length) ;
+	subBound[1].length_ = quarter_length;
+	subBound[2].cet_pos_ = cet_pos_ + Vec3(quarter_length, -quarter_length, quarter_length);
+	subBound[2].length_ = quarter_length;
+	subBound[3].cet_pos_ = cet_pos_ + Vec3(-quarter_length, -quarter_length, quarter_length);
+	subBound[3].length_ = quarter_length;
+	subBound[4].cet_pos_ = cet_pos_ + Vec3(quarter_length, quarter_length, -quarter_length);
+	subBound[4].length_ = quarter_length;
+	subBound[5].cet_pos_ = cet_pos_ + Vec3(-quarter_length, quarter_length, -quarter_length);
+	subBound[5].length_ = quarter_length;
+	subBound[6].cet_pos_ = cet_pos_ + Vec3(quarter_length, -quarter_length, -quarter_length);
+	subBound[6].length_ = quarter_length;
+	subBound[7].cet_pos_ = cet_pos_ - quarter_length;
+	subBound[7].length_ = quarter_length;
 	return subBound;
 }
 
@@ -73,6 +71,10 @@ bool BoxBounding::CheckIfInside(const Vec3& point1, const Vec3& point2, const Ve
 	return true;
 }
 
+bool BoxBounding::CheckIfinside(const SphereBounding& sp_bounding)const  {
+	return Distance(cet_pos_, sp_bounding.cet_pos_) - (length_ + sp_bounding.radius_) <= 0.0001f ? true : false;
+}
+
 void BoxBounding::BuildBound(const std::vector<Vertex>& _vert) {
 	Vec3 minpoint_(FLT_MAX),maxpoint_(FLT_MIN);
 	for (const Vertex& i: _vert)
@@ -88,7 +90,7 @@ void BoxBounding::BuildBound(const std::vector<Vertex>& _vert) {
 	maxpoint_ = maxpoint_;
 }
 
-bool BoxBounding::Intersect(const Ray& r, float& t) {
+bool BoxBounding::Intersect(const Ray& r, float& t) const {
 	const Vec3 rd(r.get_direction_());
 	const Vec3 rp(r.get_orginPos_());
 	const Vec3 invdir = 1 / rd;
@@ -174,6 +176,6 @@ void SphereBounding::BuildBound(std::vector<Vertex>& _vert) {
 	cet_pos_ = (minpoint_+ maxpoint_)*0.5f;
 }
 
-bool SphereBounding::Intersect(const Ray& r, float& t) {
+bool SphereBounding::Intersect(const Ray& r, float& t) const {
 	return true;
 }
