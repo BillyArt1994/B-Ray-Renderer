@@ -17,7 +17,7 @@ bool Engine::StartUp() {
 		success = false;
 		printf("场景管理系统启动失败... \n");
 	}
-	else if (!renderManager_.StartUp())
+	else if (!renderManager_.StartUp(sceneManager_,displayManager_))
 	{
 		success = false;
 		printf("渲染管理系统启动失败... \n");

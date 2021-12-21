@@ -9,8 +9,8 @@ private:
 	struct node {
 		//constructor
 		node() = default;
-		node(const std::vector<Hittable>& _data,const BoxBounding& _bound,const bool _is_leaf) :data(_data), bound(_bound), is_leaf(_is_leaf) {}
-		node(const BoxBounding& _bound, const bool& _is_leaf) :bound(_bound), is_leaf(_is_leaf) {}
+		node(const std::vector<Hittable>& _data,const BoxBounding& _bound,const bool _is_leaf) :data(_data), boxbound(_bound), is_leaf(_is_leaf) {}
+		node(const BoxBounding& _bound, const bool& _is_leaf) :boxbound(_bound), is_leaf(_is_leaf) {}
 		//funaction
 	public:
 		void recursiveDestory(node* node);
@@ -20,7 +20,7 @@ private:
 		}
 		//data
 		std::vector<Hittable> data;
-		BoxBounding bound;
+		BoxBounding boxbound;
 		node* sub_node[8]{ nullptr };
 		bool is_leaf = false;
 	};

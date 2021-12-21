@@ -5,6 +5,7 @@
 #include "ray.h"
 #include <array>
 
+class BoxBounding;
 class Bounding {
 public:
 
@@ -13,7 +14,6 @@ public:
 	virtual bool Intersect(const Ray& r, float& t)const = 0;
 
 	virtual bool CheckIfInside(const BoxBounding& boxBound)const = 0;
-
 };
 
 class BoxBounding :public Bounding
@@ -26,10 +26,10 @@ public:
 	std::array<BoxBounding, 8> GetEightSubBoxBounding()const;
 
 	virtual bool CheckIfInside(const BoxBounding& boxBound)const;
-
+	virtual void BuildBound(const std::vector<Vertex>& _vert) override;
+	virtual bool Intersect(const Ray& r, float& t) const override;
 	bool CheckIfInside(const Vec3& point) const;
-	void BuildBound(const std::vector<Vertex>& _vert);
-	bool Intersect(const Ray& r, float& t) const;
+
 
 	//data
 	float length_;
@@ -43,12 +43,13 @@ public:
 	SphereBounding() = default;
 	//funaction
 	virtual bool CheckIfInside(const BoxBounding& boxBound)const override;
-	virtual bool CheckIfInside(const SphereBounding& _bounding) const;
 	void BuildBound(std::vector<Vertex>& _vert);
 	bool Intersect(const Ray& r, float& t) const;
 	//data
 	float radius_ = 0.0f;
 	Vec3 cet_pos_;
 };
+
+
 
 #endif // !bounding_H_

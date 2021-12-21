@@ -13,6 +13,7 @@ bool Scene::StartUp(unsigned _id) {
 
 		break;
 	}
+	return true;
 }
 
 void Scene::Update(unsigned int _deltaT) {
