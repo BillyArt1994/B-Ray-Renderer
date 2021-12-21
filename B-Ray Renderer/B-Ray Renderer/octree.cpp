@@ -33,13 +33,13 @@ Octree::node* Octree::OctreeBuild(const std::vector<Hittable>& data_ptr, const B
 	//创建八个数据数组
 	std::vector<Hittable> data_array[8];
 
-	for (size_t i = 0; i < length; i++)
+	for (size_t i = 0; i < 8; i++)
 	{
-		for (size_t j = 0; j < 8; j++)
+		for (size_t j = 0; j < length; j++)
 		{
-			if (subBounding[j].CheckIfInside(data_ptr[i].bound_))
+			if (data_ptr[j].bound_ptr_->CheckIfInside(subBounding[i]))
 			{
-				data_array[j].push_back(data_ptr[i]);
+				data_array[i].push_back(data_ptr[j]);
 			}
 		}
 	}

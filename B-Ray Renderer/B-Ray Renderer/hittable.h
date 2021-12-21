@@ -6,12 +6,18 @@
 class Hittable {
 public:
 	//constructor
-	Hittable(const Mesh* _mesh_ptr):mesh_ptr_(_mesh_ptr){}
-	//funaction
-	
+	Hittable(Mesh* _mesh_ptr,Bounding* _bound_ptr):mesh_ptr_(_mesh_ptr), bound_ptr_(_bound_ptr){}
+
+	~Hittable()
+	{
+		delete bound_ptr_;
+		delete mesh_ptr_;
+		bound_ptr_ = nullptr;
+		mesh_ptr_ = nullptr;
+	}
 	//data
-	Bounding<> bound_;
-	const Mesh* mesh_ptr_= nullptr; 
+	Bounding* bound_ptr_ = nullptr;
+	Mesh* mesh_ptr_= nullptr; 
 };
 
 #endif // !HITTABLE_H_
