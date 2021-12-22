@@ -15,9 +15,10 @@ public:
 		bound_ptr_ = nullptr;
 		mesh_ptr_ = nullptr;
 	}
+
 	//data
 	Bounding* bound_ptr_ = nullptr;
-	Mesh* mesh_ptr_= nullptr; 
+	Mesh* mesh_ptr_= nullptr;
 };
 
 #endif // !HITTABLE_H_

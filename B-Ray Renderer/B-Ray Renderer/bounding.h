@@ -21,7 +21,7 @@ class BoxBounding :public Bounding
 public:
 	//constructor
 	BoxBounding() = default;
-	BoxBounding(const Vec3& _minp, const Vec3& _maxp) :length_(Abs(_minp.x)+ Abs(_maxp.x)), cet_pos_((_minp + _maxp) * 0.5) {}
+	BoxBounding(const Vec3& _minp, const Vec3& _maxp) :minpoint_(_minp), maxpoint_(_maxp) {}
 	//funaction
 	std::array<BoxBounding, 8> GetEightSubBoxBounding()const;
 
@@ -32,8 +32,8 @@ public:
 
 
 	//data
-	float length_;
-	Vec3 cet_pos_;
+	Vec3 minpoint_;
+	Vec3 maxpoint_;
 };
 
 class SphereBounding :public Bounding

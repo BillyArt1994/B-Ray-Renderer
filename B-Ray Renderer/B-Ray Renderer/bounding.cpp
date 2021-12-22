@@ -2,62 +2,59 @@
 
 std::array<BoxBounding, 8> BoxBounding::GetEightSubBoxBounding()const {
 	std::array<BoxBounding, 8> subBound;
-	const float quarter_length = length_ * 0.25f;
-	subBound[0].cet_pos_ = cet_pos_ + quarter_length;
-	subBound[0].length_ = quarter_length;
-	subBound[1].cet_pos_ = cet_pos_ + Vec3(-quarter_length, quarter_length, quarter_length) ;
-	subBound[1].length_ = quarter_length;
-	subBound[2].cet_pos_ = cet_pos_ + Vec3(quarter_length, -quarter_length, quarter_length);
-	subBound[2].length_ = quarter_length;
-	subBound[3].cet_pos_ = cet_pos_ + Vec3(-quarter_length, -quarter_length, quarter_length);
-	subBound[3].length_ = quarter_length;
-	subBound[4].cet_pos_ = cet_pos_ + Vec3(quarter_length, quarter_length, -quarter_length);
-	subBound[4].length_ = quarter_length;
-	subBound[5].cet_pos_ = cet_pos_ + Vec3(-quarter_length, quarter_length, -quarter_length);
-	subBound[5].length_ = quarter_length;
-	subBound[6].cet_pos_ = cet_pos_ + Vec3(quarter_length, -quarter_length, -quarter_length);
-	subBound[6].length_ = quarter_length;
-	subBound[7].cet_pos_ = cet_pos_ - quarter_length;
-	subBound[7].length_ = quarter_length;
+	const float length = (maxpoint_.x - minpoint_.x) / 2;
+	const Vec3 maxPfourB = maxpoint_;
+	const Vec3 minPfourB = maxpoint_ - length;
+	subBound[0].maxpoint_ = maxPfourB;
+	subBound[0].minpoint_ = minPfourB;
+	subBound[1].maxpoint_ = maxPfourB - Vec3(length, 0, 0);
+	subBound[1].minpoint_ = minPfourB - Vec3(length, 0, 0);
+	subBound[2].maxpoint_ = maxPfourB - Vec3(0, length, 0);
+	subBound[2].minpoint_ = minPfourB - Vec3(0, length, 0);
+	subBound[3].maxpoint_ = maxPfourB - Vec3(length, length, 0);
+	subBound[3].minpoint_ = minPfourB - Vec3(length, length, 0);
+	subBound[4].maxpoint_ = maxPfourB - Vec3(0, 0, length);
+	subBound[4].minpoint_ = minPfourB - Vec3(0, 0, length);
+	subBound[5].maxpoint_ = maxPfourB - Vec3(length, 0, length);
+	subBound[5].minpoint_ = minPfourB - Vec3(length, 0, length);
+	subBound[6].maxpoint_ = maxPfourB - Vec3(0, length, length);
+	subBound[6].minpoint_ = minPfourB - Vec3(0, length, length);
+	subBound[7].maxpoint_ = maxPfourB - Vec3(length, length, length);
+	subBound[7].minpoint_ = minPfourB - Vec3(length, length, length);
 	return subBound;
 }
 
 bool BoxBounding::CheckIfInside(const BoxBounding& boxBound) const {
-	const Vec3 maxPoint = cet_pos_ + length_;
-	const Vec3 minPoint = cet_pos_ - length_;
-	const Vec3 boxBound_maxPoint = boxBound.cet_pos_ + boxBound.length_;
-	const Vec3 boxBound_minPoint = boxBound.cet_pos_ - boxBound.length_;
-	return (minPoint.x <= boxBound_maxPoint.x && maxPoint.x >= boxBound_minPoint.x) &&
-		(minPoint.y <= boxBound_maxPoint.y && maxPoint.y >= boxBound_minPoint.y) &&
-		(minPoint.z <= boxBound_maxPoint.z && maxPoint.z >= boxBound_minPoint.z);
+
+	return (minpoint_.x <= boxBound.maxpoint_.x && maxpoint_.x >= boxBound.minpoint_.x) &&
+		(minpoint_.y <= boxBound.maxpoint_.y && maxpoint_.y >= boxBound.minpoint_.y) &&
+		(minpoint_.z <= boxBound.maxpoint_.z && maxpoint_.z >= boxBound.minpoint_.z);
 }
 
 bool BoxBounding::CheckIfInside(const Vec3& point) const {
-	const Vec3 maxPoint = cet_pos_ + length_;
-	const Vec3 minPoint = cet_pos_ - length_;
-	if (point.x > maxPoint.x || point.y > maxPoint.y || point.z > maxPoint.z ||
-		point.x < minPoint.x || point.y < minPoint.y || point.z < minPoint.z) return false;
+	if (point.x > maxpoint_.x || point.y > maxpoint_.y || point.z > maxpoint_.z ||
+		point.x < minpoint_.x || point.y < minpoint_.y || point.z < minpoint_.z) return false;
 	return true;
 }
 
 void BoxBounding::BuildBound(const std::vector<Vertex>& _vert) {
-	Vec3 minpoint(FLT_MAX),maxpoint(FLT_MIN);
+	Vec3 minpoint_(FLT_MAX),maxpoint_(FLT_MIN);
 	for (const Vertex& i: _vert)
 	{
-		minpoint.x = Min(i.position.v[0], minpoint.x);
-		minpoint.y = Min(i.position.v[1], minpoint.y);
-		minpoint.z = Min(i.position.v[2], minpoint.z);
-		maxpoint.x = Max(i.position.v[0], minpoint.x);
-		maxpoint.y = Max(i.position.v[1], minpoint.y);
-		maxpoint.z = Max(i.position.v[2], minpoint.z);
+		minpoint_.x = Min(i.position.v[0], minpoint_.x);
+		minpoint_.y = Min(i.position.v[1], minpoint_.y);
+		minpoint_.z = Min(i.position.v[2], minpoint_.z);
+		maxpoint_.x = Max(i.position.v[0], minpoint_.x);
+		maxpoint_.y = Max(i.position.v[1], minpoint_.y);
+		maxpoint_.z = Max(i.position.v[2], minpoint_.z);
 	}
-	minpoint = minpoint;
-	maxpoint = maxpoint;
+	minpoint_ = minpoint_;
+	maxpoint_ = maxpoint_;
 }
 
 bool BoxBounding::Intersect(const Ray& r, float& t) const {
-	const Vec3 maxpoint = cet_pos_ + length_;
-	const Vec3 minpoint = cet_pos_ - length_;
+	const Vec3 maxpoint_ = maxpoint_;
+	const Vec3 minpoint_ = minpoint_;
 	const Vec3 rd(r.get_direction_());
 	const Vec3 rp(r.get_orginPos_());
 	const Vec3 invdir = 1 / rd;
@@ -65,28 +62,28 @@ bool BoxBounding::Intersect(const Ray& r, float& t) const {
 
 	if (invdir.x != invdir.x)
 	{
-		if (rp.x > maxpoint.x || rp.x < minpoint.x)
+		if (rp.x > maxpoint_.x || rp.x < minpoint_.x)
 		{
 			return false;
 		}
 		tmin = -FLT_MAX;
 		tmax = FLT_MAX;
 	}
-	tmin = (minpoint.x - rp.x) * invdir.x;
-	tmax = (maxpoint.x - rp.x) * invdir.x;
+	tmin = (minpoint_.x - rp.x) * invdir.x;
+	tmax = (maxpoint_.x - rp.x) * invdir.x;
 	if (tmin > tmax) std::swap(tmin, tmax);
 
 	if (invdir.y != invdir.y)
 	{
-		if (rp.y > maxpoint.y || rp.y < minpoint.y)
+		if (rp.y > maxpoint_.y || rp.y < minpoint_.y)
 		{
 			return false;
 		}
 		tminY = -FLT_MAX;
 		tmaxY = FLT_MAX;
 	}
-	tminY = (minpoint.y - rp.y) * invdir.y;
-	tmaxY = (maxpoint.y - rp.y) * invdir.y;
+	tminY = (minpoint_.y - rp.y) * invdir.y;
+	tmaxY = (maxpoint_.y - rp.y) * invdir.y;
 	if (tminY > tmaxY) std::swap(tminY, tmaxY);
 
 	if (tmaxY < tmax)
@@ -101,7 +98,7 @@ bool BoxBounding::Intersect(const Ray& r, float& t) const {
 
 	if (invdir.z != invdir.z)
 	{
-		if (rp.z > maxpoint.z || rp.z < minpoint.z)
+		if (rp.z > maxpoint_.z || rp.z < minpoint_.z)
 		{
 			return false;
 		}
@@ -109,8 +106,8 @@ bool BoxBounding::Intersect(const Ray& r, float& t) const {
 		tmaxZ = FLT_MAX;
 	}
 
-	tminZ = (minpoint.z - rp.z) * invdir.z;
-	tmaxZ = (maxpoint.z - rp.z) * invdir.z;
+	tminZ = (minpoint_.z - rp.z) * invdir.z;
+	tmaxZ = (maxpoint_.z - rp.z) * invdir.z;
 
 	if (tminZ > tmaxZ) std::swap(tminZ, tmaxZ);
 
@@ -129,18 +126,18 @@ bool BoxBounding::Intersect(const Ray& r, float& t) const {
 }
 
 void SphereBounding::BuildBound(std::vector<Vertex>& _vert) {
-	Vec3 minpoint(FLT_MAX), maxpoint(FLT_MIN);
+	Vec3 minpoint_(FLT_MAX), maxpoint_(FLT_MIN);
 	for (const Vertex& i : _vert)
 	{
-		minpoint.x = Min(i.position.v[0], minpoint.x);
-		minpoint.y = Min(i.position.v[1], minpoint.y);
-		minpoint.z = Min(i.position.v[2], minpoint.z);
-		maxpoint.x = Max(i.position.v[0], minpoint.x);
-		maxpoint.y = Max(i.position.v[1], minpoint.y);
-		maxpoint.z = Max(i.position.v[2], minpoint.z);
+		minpoint_.x = Min(i.position.v[0], minpoint_.x);
+		minpoint_.y = Min(i.position.v[1], minpoint_.y);
+		minpoint_.z = Min(i.position.v[2], minpoint_.z);
+		maxpoint_.x = Max(i.position.v[0], minpoint_.x);
+		maxpoint_.y = Max(i.position.v[1], minpoint_.y);
+		maxpoint_.z = Max(i.position.v[2], minpoint_.z);
 	}
-	radius_ = Distance(minpoint, maxpoint) * 0.5f;
-	cet_pos_ = (minpoint+ maxpoint)*0.5f;
+	radius_ = Distance(minpoint_, maxpoint_) * 0.5f;
+	cet_pos_ = (minpoint_+ maxpoint_)*0.5f;
 }
 
 bool SphereBounding::Intersect(const Ray& r, float& t) const {
@@ -148,16 +145,14 @@ bool SphereBounding::Intersect(const Ray& r, float& t) const {
 }
 
 bool SphereBounding::CheckIfInside(const BoxBounding& boxBound)const {
-	const Vec3 boxBound_maxPoint = boxBound.cet_pos_ + boxBound.length_;
-	const Vec3 boxBound_minPoint = boxBound.cet_pos_ - boxBound.length_;
 	const float maxpoint_dis_square = 
-			(boxBound_maxPoint.x - cet_pos_.x)* (boxBound_maxPoint.x - cet_pos_.x)
-		+(boxBound_maxPoint.y - cet_pos_.y)* (boxBound_maxPoint.y - cet_pos_.y)
-		+(boxBound_maxPoint.z - cet_pos_.z)* (boxBound_maxPoint.z - cet_pos_.z);
+			(boxBound.maxpoint_.x - cet_pos_.x)* (boxBound.maxpoint_.x - cet_pos_.x)
+		+(boxBound.maxpoint_.y - cet_pos_.y)* (boxBound.maxpoint_.y - cet_pos_.y)
+		+(boxBound.maxpoint_.z - cet_pos_.z)* (boxBound.maxpoint_.z - cet_pos_.z);
 	const float minpoint_dis_square =
-		(boxBound_minPoint.x - cet_pos_.x) * (boxBound_minPoint.x - cet_pos_.x)
-		+ (boxBound_minPoint.y - cet_pos_.y) * (boxBound_minPoint.y - cet_pos_.y)
-		+ (boxBound_minPoint.z - cet_pos_.z) * (boxBound_minPoint.z - cet_pos_.z);
+		(boxBound.minpoint_.x - cet_pos_.x) * (boxBound.minpoint_.x - cet_pos_.x)
+		+ (boxBound.minpoint_.y - cet_pos_.y) * (boxBound.minpoint_.y - cet_pos_.y)
+		+ (boxBound.minpoint_.z - cet_pos_.z) * (boxBound.minpoint_.z - cet_pos_.z);
 	const float radius_square = radius_ * radius_;
 	return (maxpoint_dis_square<= radius_square || minpoint_dis_square<= radius_square);
 }

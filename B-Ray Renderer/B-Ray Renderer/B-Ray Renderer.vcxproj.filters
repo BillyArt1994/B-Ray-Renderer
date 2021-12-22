@@ -107,5 +107,8 @@
     <ClInclude Include="renderManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

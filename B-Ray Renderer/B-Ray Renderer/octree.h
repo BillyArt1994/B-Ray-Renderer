@@ -4,6 +4,18 @@
 #include "hittable.h"
 #include <vector>
 
+/*
+    x  y  z
+ 0  0  0  0
+ 1  1  0  0
+ 2  0  1  0
+ 3  1  0  1
+ 4  0  0  1
+ 5  1  0  1
+ 6  0  1  1
+ 7  1  1  1
+*/
+
 class Octree {
 private:
 	struct node {
