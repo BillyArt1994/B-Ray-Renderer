@@ -1,23 +1,8 @@
 #include "scene.h"
 
 void LoadScene(unsigned _id) {
-	//switch (_id)
-	//{
-	//case 1:
-	//	Mesh box_big("./scene/simple_Scene_01/Big_Box.obj");
-	//	Mesh box_small("./scene/simple_Scene_01/Box_Small.obj");
-	//	Mesh ground("./scene/simple_Scene_01/Ground.obj");
-	//	Mesh sphere("./scene/simple_Scene_01/Ground.obj");
-	//	Mesh wall_left("./scene/simple_Scene_01/Wall_Left.obj");
-	//	Mesh wall_right("./scene/simple_Scene_01/Wall_Right.obj");
-	//	break;
-	//case 2:
 
-	//	break;
-	//case 3:
-
-	//	break;
-	}
+}
 
 void Scene::Update(unsigned int _deltaT) {
 

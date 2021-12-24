@@ -173,6 +173,7 @@
     <ClInclude Include="ray.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="renderManager.h" />
+    <ClInclude Include="renderParams.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="svpng.h" />
