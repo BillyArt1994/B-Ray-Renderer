@@ -1,9 +1,9 @@
 #ifndef TRIANGLE_H_
 #define TRIANGLE_H_
-#include "ray.h"
 #include "vertex.h"
 #include "bmath.h"
 #include <vector>
+#include "bounding.h"
 
 class Triangle {
 public:
@@ -11,7 +11,7 @@ public:
 	Triangle() = default;
 	Triangle (const unsigned& _v1, const unsigned& _v2, const unsigned& _v3):idx1_(_v1), idx2_(_v2),idx3_(_v3){}
 	//funaction
-
+	void BuildBounding(const std::vector<Vertex>& vertex_list);
 	// data
 	Vec3 normal_;
 	union
@@ -24,5 +24,6 @@ public:
 	};
 
 
+	SphereBounding bound_;
 };
 #endif // !TRIANGLE_H_

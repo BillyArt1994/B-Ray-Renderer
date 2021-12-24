@@ -10,10 +10,11 @@ public:
 		orginPos_ = r.orginPos_;
 		direction_ = r.direction_;
 	}
-	Ray(const Vec3& _pos ,const Vec3& _dir):orginPos_(_pos), direction_(_dir){}
+	Ray(const Vec3& _pos, const Vec3& _dir) :orginPos_(_pos), direction_(_dir) {}
 	//funaction
 	inline Vec3 get_orginPos_() const { return orginPos_; }
 	inline Vec3 get_direction_() const { return direction_; }
+	inline void RayRun(const float dis) { orginPos_ += dis * direction_; }
 private:
 	//data
 	Vec3 orginPos_;

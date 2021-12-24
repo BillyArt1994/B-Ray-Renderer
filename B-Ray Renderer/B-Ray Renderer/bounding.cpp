@@ -125,7 +125,7 @@ bool BoxBounding::Intersect(const Ray& r, float& t) const {
 	return true;
 }
 
-void SphereBounding::BuildBound(std::vector<Vertex>& _vert) {
+void SphereBounding::BuildBound(const std::vector<Vertex>& _vert) {
 	Vec3 minpoint_(FLT_MAX), maxpoint_(FLT_MIN);
 	for (const Vertex& i : _vert)
 	{

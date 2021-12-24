@@ -16,7 +16,7 @@ void Octree::node::recursiveDestory(Octree::node* node) {
 	node = nullptr;
 }
 
-Octree::node* Octree::OctreeBuild(const std::vector<Hittable>& data_ptr, const BoxBounding& bound, const unsigned depth) {
+Octree::node* Octree::OctreeBuild(const std::vector<Hittable*>& data_ptr, const BoxBounding& bound, const unsigned depth) {
 	//获得数据大小
 	int length = data_ptr.size();
 
@@ -31,13 +31,13 @@ Octree::node* Octree::OctreeBuild(const std::vector<Hittable>& data_ptr, const B
 	//获得八个子包围盒
 	std::array<BoxBounding, 8> subBounding = bound.GetEightSubBoxBounding();
 	//创建八个数据数组
-	std::vector<Hittable> data_array[8];
+	std::vector<Hittable*> data_array[8];
 
 	for (size_t i = 0; i < 8; i++)
 	{
 		for (size_t j = 0; j < length; j++)
 		{
-			if (data_ptr[j].bound_ptr_->CheckIfInside(subBounding[i]))
+			if (data_ptr[j]->bound_ptr_->CheckIfInside(subBounding[i]))
 			{
 				data_array[i].push_back(data_ptr[j]);
 			}
@@ -69,6 +69,50 @@ Octree::node* Octree::OctreeBuild(const std::vector<Hittable>& data_ptr, const B
 	return curnode;
 }
 
-void Octree::BuildTree(const std::vector<Hittable>& data_ptr, const BoxBounding& bound, const unsigned depth) {
-	root_node_ptr_ = OctreeBuild(data_ptr,bound,depth);
+void Octree::BuildTree(const std::vector<Hittable*>& data_ptr, const BoxBounding& bound, const unsigned depth) {
+	root_node_ptr_ = OctreeBuild(data_ptr, bound, depth);
+}
+
+bool Octree::Intersect(const Ray& r) {
+	Ray ray(r);
+	node* node_ptr = nullptr;
+	std::vector<Hittable*> hittable;
+	float offset_t(0.0f), minDis(FLT_MAX),temp_t(0.0f);
+	unsigned length = 0;
+	while (root_node_ptr_->boxbound.CheckIfInside(ray.get_orginPos_()))//检测射线是否还在场景内部
+	{
+		offset_t = 0.0f;							//重置步进t_Step
+		node_ptr = LookUpNode(ray.get_orginPos_()); //获得射线当前所在节点
+		hittable = node_ptr->data;				    //获得当前节点数据
+		length = hittable.size();					//获得数据大小
+
+		if (length)
+		{
+			for (size_t i = 0; i < length; i++)
+			{
+				if (hittable[i]->bound_ptr_->Intersect(ray, temp_t) && temp_t < minDis)				  //与数据检测相交与否
+				{
+					minDis = temp_t;
+				}
+			}
+			if(minDis != FLT_MAX) return true;
+		}
+
+		node_ptr->boxbound.Intersect(ray, offset_t);//获得当前节点立方体的出口
+
+		ray.RayRun(offset_t + 0.001f);//给光线添加一个偏移值穿越到下一个节点中
+	}
+	return false;
+}
+
+Octree::node* Octree::LookUpNode(const Vec3& pos) {
+	const int x = floor(pos.x), y = floor(pos.y), z = floor(pos.z);
+	node* node_ptr = nullptr;
+	unsigned i(31);
+	do
+	{
+		node_ptr = node_ptr->sub_node[((x >> i) & 1) + (((y >> i) & 1) << 1) + (((z >> i) & 1) << 2)];
+		--i;
+	} while (!node_ptr->is_leaf);
+	return node_ptr;
 }

@@ -17,7 +17,7 @@ public:
 	//data
 	Camera* maincamera_;
 	Light* light_;
-	std::vector<Hittable> hittable_list_;
+	std::vector<GameObject> hittable_list_;
 	Octree scene_octree;
 	void BuildSceneBounding();
 	void BuildGlobalOctree();

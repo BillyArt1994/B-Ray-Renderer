@@ -147,6 +147,7 @@
     <ClCompile Include="bounding.cpp" />
     <ClCompile Include="displayManager.cpp" />
     <ClCompile Include="engine.cpp" />
+    <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mesh.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="renderManager.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bounding.h" />
@@ -162,6 +164,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="displayManager.h" />
     <ClInclude Include="engine.h" />
+    <ClInclude Include="gameObject.h" />
     <ClInclude Include="hittable.h" />
     <ClInclude Include="inputManager.h" />
     <ClInclude Include="light.h" />

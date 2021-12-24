@@ -1,43 +1,41 @@
 #include "scene.h"
 
 void LoadScene(unsigned _id) {
-	switch (_id)
-	{
-	case 1:
-		Mesh box_big("./scene/simple_Scene_01/Big_Box.obj");
-		Mesh box_small("./scene/simple_Scene_01/Box_Small.obj");
-		Mesh ground("./scene/simple_Scene_01/Ground.obj");
-		Mesh sphere("./scene/simple_Scene_01/Ground.obj");
-		Mesh wall_left("./scene/simple_Scene_01/Wall_Left.obj");
-		Mesh wall_right("./scene/simple_Scene_01/Wall_Right.obj");
-		break;
-	case 2:
+	//switch (_id)
+	//{
+	//case 1:
+	//	Mesh box_big("./scene/simple_Scene_01/Big_Box.obj");
+	//	Mesh box_small("./scene/simple_Scene_01/Box_Small.obj");
+	//	Mesh ground("./scene/simple_Scene_01/Ground.obj");
+	//	Mesh sphere("./scene/simple_Scene_01/Ground.obj");
+	//	Mesh wall_left("./scene/simple_Scene_01/Wall_Left.obj");
+	//	Mesh wall_right("./scene/simple_Scene_01/Wall_Right.obj");
+	//	break;
+	//case 2:
 
-		break;
-	case 3:
+	//	break;
+	//case 3:
 
-		break;
+	//	break;
 	}
-}
 
 void Scene::Update(unsigned int _deltaT) {
 
 }
 
 void Scene::BuildBounding() {
-	size_t length = hittable_list_.size();
+	const size_t length = hittable_list_.size();
 	for (size_t i = 0; i < length; i++)
 	{
-		hittable_list_[i].bound_ptr_ = new BoxBounding();
-		hittable_list_[i].bound_ptr_->BuildBound(hittable_list_[i].mesh_ptr_->vertex_list_);
+		hittable_list_[i].BuildBounding();
 	}
 }
 
 void Scene::BuildLocalOctree() {
-	size_t length = hittable_list_.size();
+	const size_t length = hittable_list_.size();
 	for (size_t i = 0; i < length; i++)
 	{
-		hittable_list_[i]
+		hittable_list_[i].BuildOctree();
 	}
 }
 
@@ -48,8 +46,8 @@ void Scene::BuildSceneBounding() {
 	Vec3 maxpoint;
 	for (size_t i = 0; i < length; i++)
 	{
-		maxpoint = (*(BoxBounding*)hittable_list_[i].bound_ptr_).maxpoint_;
-		minpoint = (*(BoxBounding*)hittable_list_[i].bound_ptr_).maxpoint_;
+		maxpoint = hittable_list_[i].bound_.maxpoint_;
+		minpoint = hittable_list_[i].bound_.maxpoint_;
 		x = Max(Max(Abs(maxpoint.x), Abs(minpoint.x)), x);
 		y = Max(Max(Abs(maxpoint.y), Abs(minpoint.y)), y);
 		z = Max(Max(Abs(maxpoint.z), Abs(minpoint.z)), z);

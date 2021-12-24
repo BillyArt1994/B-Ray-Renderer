@@ -10,6 +10,7 @@ class Bounding {
 public:
 
 	virtual void BuildBound(const std::vector<Vertex>& _vert) = 0;
+	virtual void BuildBound(const Vertex& v1, const Vertex& v2, const Vertex& v3) = 0;
 	//intersection function
 	virtual bool Intersect(const Ray& r, float& t)const = 0;
 
@@ -27,6 +28,7 @@ public:
 
 	virtual bool CheckIfInside(const BoxBounding& boxBound)const;
 	virtual void BuildBound(const std::vector<Vertex>& _vert) override;
+	virtual void BuildBound(const Vertex& v1, const Vertex& v2, const Vertex& v3) override;
 	virtual bool Intersect(const Ray& r, float& t) const override;
 	bool CheckIfInside(const Vec3& point) const;
 
@@ -43,8 +45,9 @@ public:
 	SphereBounding() = default;
 	//funaction
 	virtual bool CheckIfInside(const BoxBounding& boxBound)const override;
-	void BuildBound(std::vector<Vertex>& _vert);
-	bool Intersect(const Ray& r, float& t) const;
+	virtual void BuildBound(const std::vector<Vertex>& _vert) override;
+	virtual void BuildBound(const Vertex& v1, const Vertex& v2, const Vertex& v3) override;
+	virtual bool Intersect(const Ray& r, float& t) const override;
 	//data
 	float radius_ = 0.0f;
 	Vec3 cet_pos_;
