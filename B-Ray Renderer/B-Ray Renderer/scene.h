@@ -10,19 +10,21 @@
 class Scene {
 public:
 	//constructor
-	Scene(unsigned _id);
+	explicit Scene(unsigned _id);
 	//funaction
 	void Update(unsigned int _deltaT);
-	void LoadScene(unsigned _id);
+	void StartUp();
 	//data
-	Camera* maincamera_;
-	Light* light_;
+	Camera* maincamera_ =nullptr;
+	Light* light_ =nullptr;
 	std::vector<GameObject> hittable_list_;
 	Octree scene_octree;
 	void BuildSceneBounding();
 	void BuildGlobalOctree();
 private:
-	void BuildBounding();
+	//funaction
+	void LoadScene(unsigned _id);
+	void BuildObjBounding();
 	void BuildLocalOctree();
 	//data
 	BoxBounding scene_bound_;

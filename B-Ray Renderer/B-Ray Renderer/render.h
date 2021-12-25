@@ -6,12 +6,17 @@
 #include "ray.h"
 #include "renderParams.h"
 #include "sceneManager.h"
+#include "displayManager.h"
 
 struct ThreadParams {
 	ThreadParams() = default;
+	ThreadParams(unsigned _height, unsigned _width, unsigned char* _buffer_ptr, Vec3 _horizontal, Vec3 _vertical, Vec3 _startpos):height(_height), width(_width), horizontal(_horizontal), vertical(_vertical), startpos(_startpos), buffer_ptr(_buffer_ptr) {}
 	unsigned height = 0u;
 	unsigned width = 0u;
 	unsigned char* buffer_ptr = nullptr;
+	Vec3 horizontal;
+	Vec3 vertical;
+	Vec3 startpos;
 };
 
 class Render
@@ -19,7 +24,7 @@ class Render
 public:
 
 	void RenderBuffer();
-
+	~Render();
 private:
 	//funaction
 	static DWORD WINAPI PartialRender(LPVOID lpParameter);//Ïß³Ìº¯Êý
@@ -28,6 +33,7 @@ private:
 	unsigned char* buffer_ = nullptr;
 	static Camera* maincamera_;
 	ThreadParams* threadParams_ = nullptr;
+	DisplayManager* displayManager_ptr_ = nullptr;
 };
 
 Camera* Render::maincamera_ = nullptr;

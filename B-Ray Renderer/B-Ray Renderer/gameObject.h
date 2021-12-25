@@ -9,6 +9,9 @@ class GameObject{
 public:
 	//constructor
 	GameObject(Mesh* _mesh_ptr_):mesh_ptr_(_mesh_ptr_){}
+	GameObject(const Mesh& _mesh) {
+		mesh_ptr_ = new Mesh(_mesh);
+	}
 	//funaction
 	void BuildOctree();
 	void BuildBounding();

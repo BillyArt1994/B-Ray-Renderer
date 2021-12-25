@@ -48,5 +48,14 @@ constexpr float Saturate(const float& x) noexcept {
 
 inline float Abs(float x) noexcept { return x < 0 ? -x : x; }
 
+constexpr int Nearest2Power(int i) {
+	i |= (i >> 1);
+	i |= (i >> 2);
+	i |= (i >> 4);
+	i |= (i >> 8);
+	i |= (i >> 16);
+	return i + 1;
+}
+
 #endif // !BMATH_H_H
 
