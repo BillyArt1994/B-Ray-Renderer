@@ -11,7 +11,7 @@ public:
 	bool StartUp();
 	void ShutDown();
 	void Update(const unsigned int deltaT)const ;
-	void SwitchScene();
+	void SwitchScene(const unsigned id);
 	Scene* get_current_scene_() const{return current_scene_;}
 private:
 	//data
