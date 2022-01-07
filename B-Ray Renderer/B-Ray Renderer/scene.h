@@ -3,7 +3,6 @@
 #include "camera.h"
 #include "octree.h"
 #include "light.h"
-#include "hittable.h"
 #include "bounding.h"
 #include <vector>
 
@@ -14,13 +13,13 @@ public:
 	//funaction
 	void Update(unsigned int _deltaT);
 	void StartUp();
+	void BuildSceneBounding();
+	void BuildGlobalOctree();
 	//data
 	Camera* maincamera_ =nullptr;
 	Light* light_ =nullptr;
-	std::vector<GameObject> hittable_list_;
-	Octree scene_octree;
-	void BuildSceneBounding();
-	void BuildGlobalOctree();
+	std::vector<GameObject> gameObject_list_;
+	ObjctOctree scene_octree;
 private:
 	//funaction
 	void LoadScene(unsigned _id);

@@ -8,7 +8,7 @@ void Scene::LoadScene(unsigned _id) {
 	switch (_id)
 	{
 	case 1:
-		hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Torus.obj")));
+		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Torus.obj")));
 		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Big_Box.obj")) );
 		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Box.obj")) );
 		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Box_Small.obj")) );
@@ -36,30 +36,30 @@ void Scene::Update(unsigned int _deltaT) {
 }
 
 void Scene::BuildObjBounding() {
-	const size_t length = hittable_list_.size();
+	const size_t length = gameObject_list_.size();
 	for (size_t i = 0; i < length; i++)
 	{
-		hittable_list_[i].BuildBounding();
+		gameObject_list_[i].BuildBounding();
 	}
 }
 
 void Scene::BuildLocalOctree() {
-	const size_t length = hittable_list_.size();
+	const size_t length = gameObject_list_.size();
 	for (size_t i = 0; i < length; i++)
 	{
-		hittable_list_[i].BuildOctree();
+		gameObject_list_[i].BuildLocalOctree();
 	}
 }
 
 void Scene::BuildSceneBounding() {
-	size_t length = hittable_list_.size();
+	size_t length = gameObject_list_.size();
 	float x(0), y(0), z(0);
 	Vec3 minpoint;
 	Vec3 maxpoint;
 	for (size_t i = 0; i < length; i++)
 	{
-		maxpoint = hittable_list_[i].bound_.maxpoint_;
-		minpoint = hittable_list_[i].bound_.maxpoint_;
+		maxpoint = gameObject_list_[i].bound_.maxpoint_;
+		minpoint = gameObject_list_[i].bound_.maxpoint_;
 		x = Max(Max(Abs(maxpoint.x), Abs(minpoint.x)), x);
 		y = Max(Max(Abs(maxpoint.y), Abs(minpoint.y)), y);
 		z = Max(Max(Abs(maxpoint.z), Abs(minpoint.z)), z);

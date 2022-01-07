@@ -116,9 +116,6 @@
     <ClInclude Include="gameObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="hittable.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="renderParams.h">
       <Filter>头文件</Filter>
     </ClInclude>

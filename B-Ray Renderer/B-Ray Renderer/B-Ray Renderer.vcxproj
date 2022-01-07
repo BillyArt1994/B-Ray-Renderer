@@ -165,7 +165,6 @@
     <ClInclude Include="displayManager.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="gameObject.h" />
-    <ClInclude Include="hittable.h" />
     <ClInclude Include="inputManager.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="mesh.h" />

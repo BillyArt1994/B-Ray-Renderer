@@ -22,7 +22,6 @@ public:
 		return vertex_list_.size();
 	}
 	//data
-	Transform transform_;
 	std::vector<Vertex> vertex_list_;
 	std::vector<Triangle> triangle_list_;
 	std::string name_;
