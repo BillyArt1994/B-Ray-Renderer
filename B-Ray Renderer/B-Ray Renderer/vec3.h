@@ -8,7 +8,7 @@ struct Vec3 {
 	Vec3() = default;
 	Vec3(const float _x, const float _y, const float _z) :x(_x), y(_y), z(_z) {}
 	Vec3(const Vec3& b) : x(b.x), y(b.y), z(b.z) {}
-	explicit  Vec3(const float _value) :x(_value), y(_value), z(_value) {}
+	explicit Vec3(const float _value) :x(_value), y(_value), z(_value) {}
 
 	//operator
 	inline Vec3 operator +(const Vec3& b) const {

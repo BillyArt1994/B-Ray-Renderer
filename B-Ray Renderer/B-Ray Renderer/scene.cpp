@@ -39,7 +39,7 @@ void Scene::BuildObjBounding() {
 	const size_t length = gameObject_list_.size();
 	for (size_t i = 0; i < length; i++)
 	{
-		gameObject_list_[i].BuildBounding();
+		gameObject_list_[i].BuildBounds<BoxBounding>();
 	}
 }
 
@@ -58,7 +58,7 @@ void Scene::BuildSceneBounding() {
 	Vec3 maxpoint;
 	for (size_t i = 0; i < length; i++)
 	{
-		maxpoint = gameObject_list_[i].bound_.maxpoint_;
+		maxpoint =(*BoxBounding)(gameObject_list_[i].bound_)maxpoint_;
 		minpoint = gameObject_list_[i].bound_.maxpoint_;
 		x = Max(Max(Abs(maxpoint.x), Abs(minpoint.x)), x);
 		y = Max(Max(Abs(maxpoint.y), Abs(minpoint.y)), y);

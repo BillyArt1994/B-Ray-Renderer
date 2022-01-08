@@ -37,7 +37,7 @@ ObjctOctree::node* ObjctOctree::OctreeBuild(const std::vector<unsigned>& obj_ind
 	{
 		for (size_t j = 0; j < length; j++)
 		{
-			if ((*gameObject_list_ptr_)[obj_index[j]].bound_.CheckIfInside(subBounding[i]))
+			if ((*gameObject_list_ptr_)[obj_index[j]].bound_ptr_->Contains (subBounding[i]))
 			{
 				data_array[i].push_back(obj_index[j]);
 			}
@@ -70,14 +70,7 @@ ObjctOctree::node* ObjctOctree::OctreeBuild(const std::vector<unsigned>& obj_ind
 }
 
 void ObjctOctree::BuildTree(std::vector<GameObject>* _gameObject_list_ptr, const BoxBounding& bound) {
-	gameObject_list_ptr_ = _gameObject_list_ptr;
-	std::vector<unsigned> obj_index;
-	const size_t length = _gameObject_list_ptr->size();
-	for (size_t i = 0; i < length; i++)
-	{
-		obj_index.push_back(i);
-	}
-	root_node_ptr_ = OctreeBuild(obj_index, bound, 32);
+
 }
 
 bool ObjctOctree::Intersect(const Ray& r) {
@@ -86,7 +79,7 @@ bool ObjctOctree::Intersect(const Ray& r) {
 	std::vector<unsigned> gameobject_index;
 	float offset_t(0.0f), minDis(FLT_MAX),temp_t(0.0f);
 	unsigned length = 0;
-	while (root_node_ptr_->boxbound.CheckIfInside(ray.get_orginPos_()))//检测射线是否还在场景内部
+	while (root_node_ptr_->boxbound.Contains(ray.get_orginPos_()))//检测射线是否还在场景内部
 	{
 		offset_t = 0.0f;							//重置步进t_Step
 		node_ptr = LookUpNode(ray.get_orginPos_()); //获得射线当前所在节点
@@ -97,7 +90,7 @@ bool ObjctOctree::Intersect(const Ray& r) {
 		{
 			for (size_t i = 0; i < length; i++)
 			{
-				if ((*gameObject_list_ptr_)[gameobject_index[i]].bound_.Intersect(ray, temp_t) && temp_t < minDis)				  //与数据检测相交与否
+				if ((*gameObject_list_ptr_)[gameobject_index[i]].bound_ptr_ ->IntersectRay(ray, temp_t) && temp_t < minDis)				  //与数据检测相交与否
 				{
 					minDis = temp_t;
 				}
@@ -105,7 +98,7 @@ bool ObjctOctree::Intersect(const Ray& r) {
 			if(minDis != FLT_MAX) return true;
 		}
 
-		node_ptr->boxbound.Intersect(ray, offset_t);//获得当前节点立方体的出口
+		node_ptr->boxbound.IntersectRay(ray, offset_t);//获得当前节点立方体的出口
 
 		ray.RayRun(offset_t + 0.001f);//给光线添加一个偏移值穿越到下一个节点中
 	}
@@ -125,14 +118,14 @@ ObjctOctree::node* ObjctOctree::LookUpNode(const Vec3& pos) {
 }
 
 
-TriangleOctree::node* TriangleOctree::OctreeBuild(const std::vector<Triangle>& triangle_index, const BoxBounding& bound, const unsigned depth) {
+TriangleOctree::node* TriangleOctree::OctreeBuild(const std::vector<triangleHittle>& triangle_list, const BoxBounding& bound, const unsigned depth) {
 	//获得数据大小
-	int length = triangle_index.size();
+	int length = triangle_list.size();
 
 	//如果数据低于设置的最大值或者八叉树深度低于1返回叶子节点
-	if (length <= 1 || depth < 1)
+	if (length <= 15 || depth < 1)
 	{
-		TriangleOctree::node* leaf_node = new TriangleOctree::node(triangle_index, bound, true);
+		TriangleOctree::node* leaf_node = new TriangleOctree::node(triangle_list, bound, true);
 		return leaf_node;
 	}
 
@@ -140,16 +133,16 @@ TriangleOctree::node* TriangleOctree::OctreeBuild(const std::vector<Triangle>& t
 	//获得八个子包围盒
 	std::array<BoxBounding, 8> subBounding = bound.GetEightSubBoxBounding();
 	//创建八个数据数组
-	std::vector<Triangle> data_array[8];
+	std::vector<triangleHittle> data_array[8];
 
 	for (size_t i = 0; i < 8; i++)
 	{
-		for (size_t j = 0; j < length; j++)
+		for (size_t j = 0; j < length; j+=3)
 		{
-			if (triangle_index[j].bound_.CheckIfInside(subBounding[i]))
+			if (triangle_list[j].triangle_bounds.Contains(subBounding[i]))
 			{
-				data_array[i].push_back(triangle_index[j]);
-			}
+				data_array[i].push_back(triangle_list[j]);
+			} 
 		}
 	}
 
@@ -179,5 +172,5 @@ TriangleOctree::node* TriangleOctree::OctreeBuild(const std::vector<Triangle>& t
 }
 
 void TriangleOctree::BuildTree() {
-	root_node_ptr_ =OctreeBuild(obj_ptr_->mesh_ptr_->triangle_list_, obj_ptr_->bound_,32);
+
 }

@@ -62,11 +62,20 @@ public:
 class TriangleOctree {
 
 private:
+	//三角面数据结构
+	struct triangleHittle
+	{
+		triangleHittle() = default;
+		triangleHittle(unsigned _v1, unsigned _v2, unsigned _v3, SphereBounding _triangle_bounds) :v1(_v1),v2(_v2),v3(_v3), triangle_bounds(_triangle_bounds){}
+		unsigned v1 = 0, v2 = 0, v3 = 0;
+		SphereBounding triangle_bounds;
+	};
+
 	//八叉树节点数据
 	struct node {
 		//constructor
 		node() = default;
-		node(const std::vector<Triangle>& _data_index, const BoxBounding& _bound, const bool _is_leaf) :data_index(_data_index), boxbound(_bound), is_leaf(_is_leaf) {}
+		node(const std::vector<triangleHittle>& _data_index, const BoxBounding& _bound, const bool _is_leaf) :data_index(_data_index), boxbound(_bound), is_leaf(_is_leaf) {}
 		node(const BoxBounding& _bound, const bool& _is_leaf) :boxbound(_bound), is_leaf(_is_leaf) {}
 		//funaction
 	public:
@@ -76,13 +85,13 @@ private:
 			recursiveDestory(this);
 		}
 		//data
-		std::vector<Triangle> data_index;
+		std::vector<triangleHittle> data_index;
 		BoxBounding boxbound;
 		node* sub_node[8]{ nullptr };
 		bool is_leaf = false;
 	};
 
-	node* OctreeBuild(const std::vector<Triangle>& triangle_index, const BoxBounding& bound, const unsigned depth);
+	node* OctreeBuild(const std::vector<triangleHittle>& triangle_list, const BoxBounding& bound, const unsigned depth);
 
 	GameObject* obj_ptr_ = nullptr;
 public:

@@ -6,7 +6,6 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "triangle.h"
 
 class Mesh {
 public:
@@ -23,7 +22,7 @@ public:
 	}
 	//data
 	std::vector<Vertex> vertex_list_;
-	std::vector<Triangle> triangle_list_;
+	std::vector<unsigned> triangle_list_;
 	std::string name_;
 };
 

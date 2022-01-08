@@ -156,7 +156,6 @@
     <ClCompile Include="renderManager.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneManager.cpp" />
-    <ClCompile Include="triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bounding.h" />
@@ -177,7 +176,6 @@
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="svpng.h" />
     <ClInclude Include="transform.h" />
-    <ClInclude Include="triangle.h" />
     <ClInclude Include="vec3.h" />
     <ClInclude Include="vertex.h" />
   </ItemGroup>
