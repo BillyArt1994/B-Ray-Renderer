@@ -14,15 +14,15 @@ public:
 	Mesh(const std::string filename);
 	//function
 	inline rsize_t get_face_count_()const {
-		return triangle_list_.size() / 3u;
+		return triangle_array_.size() / 3u;
 	}
 
 	inline rsize_t get_vertex_count_()const {
-		return vertex_list_.size();
+		return vertex_array_.size();
 	}
 	//data
-	std::vector<Vertex> vertex_list_;
-	std::vector<unsigned> triangle_list_;
+	std::vector<Vertex> vertex_array_;
+	std::vector<unsigned> triangle_array_;
 	std::string name_;
 };
 

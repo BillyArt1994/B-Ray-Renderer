@@ -9,13 +9,7 @@ void Scene::LoadScene(unsigned _id) {
 	{
 	case 1:
 		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Torus.obj")));
-		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Big_Box.obj")) );
-		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Box.obj")) );
-		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Box_Small.obj")) );
-		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Ground.obj")) );
-		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Sphere.obj")) );
-		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Wall_Left.obj")) );
-		//hittable_list_.push_back(GameObject(Mesh("../scenes/scene_01/Wall_Right.obj")) );
+		gameObject_array_.push_back(GameObject(Mesh("../scenes/scene_01/Torus.obj")));
 		break;
 	case 2:
 		break;
@@ -36,30 +30,30 @@ void Scene::Update(unsigned int _deltaT) {
 }
 
 void Scene::BuildObjBounding() {
-	const size_t length = gameObject_list_.size();
+	const size_t length = gameObject_array_.size();
 	for (size_t i = 0; i < length; i++)
 	{
-		gameObject_list_[i].BuildBounds<BoxBounding>();
+		gameObject_array_[i].BuildBounds<BoxBounding>();
 	}
 }
 
 void Scene::BuildLocalOctree() {
-	const size_t length = gameObject_list_.size();
+	const size_t length = gameObject_array_.size();
 	for (size_t i = 0; i < length; i++)
 	{
-		gameObject_list_[i].BuildLocalOctree();
+		gameObject_array_[i].BuildLocalOctree();
 	}
 }
 
 void Scene::BuildSceneBounding() {
-	size_t length = gameObject_list_.size();
+	size_t length = gameObject_array_.size();
 	float x(0), y(0), z(0);
 	Vec3 minpoint;
 	Vec3 maxpoint;
 	for (size_t i = 0; i < length; i++)
 	{
-		maxpoint =(*BoxBounding)(gameObject_list_[i].bound_)maxpoint_;
-		minpoint = gameObject_list_[i].bound_.maxpoint_;
+		maxpoint = ((BoxBounding*)(gameObject_array_[i].bound_ptr_))->maxpoint_;
+		minpoint = ((BoxBounding*)(gameObject_array_[i].bound_ptr_))->minpoint_;
 		x = Max(Max(Abs(maxpoint.x), Abs(minpoint.x)), x);
 		y = Max(Max(Abs(maxpoint.y), Abs(minpoint.y)), y);
 		z = Max(Max(Abs(maxpoint.z), Abs(minpoint.z)), z);

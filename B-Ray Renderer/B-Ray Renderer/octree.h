@@ -36,17 +36,19 @@ private:
 		//data
 		std::vector<unsigned> data{0u};
 		BoxBounding boxbound;
-		node* sub_node[8]{ nullptr };
+		node* sub_node[8]{nullptr};
 		bool is_leaf = false;
 	};
 
 
 	//funaction
-	node* OctreeBuild(const std::vector<unsigned>& data_ptr, const BoxBounding& bound, const unsigned depth);
+	void OctreeBuild(node* node_ptr,const std::vector<unsigned>& data_ptr, const BoxBounding& bound, const unsigned depth);
 
 	node* LookUpNode(const Vec3& pos);
 
+	//data
 	std::vector<GameObject>* gameObject_list_ptr_;
+
 public:
 	ObjctOctree() = default;
 
@@ -56,7 +58,10 @@ public:
 	bool Intersect(const Ray& r);
 
 	node* root_node_ptr_ = nullptr;
+
+	unsigned maxcount = 0u;
 };
+
 
 
 class TriangleOctree {

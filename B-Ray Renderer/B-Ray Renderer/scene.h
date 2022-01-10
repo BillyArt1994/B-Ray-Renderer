@@ -4,6 +4,7 @@
 #include "octree.h"
 #include "light.h"
 #include "bounding.h"
+#include "bmath.h"
 #include <vector>
 
 class Scene {
@@ -18,7 +19,7 @@ public:
 	//data
 	Camera* maincamera_ =nullptr;
 	Light* light_ =nullptr;
-	std::vector<GameObject> gameObject_list_;
+	std::vector<GameObject> gameObject_array_;
 	ObjctOctree scene_octree;
 private:
 	//funaction

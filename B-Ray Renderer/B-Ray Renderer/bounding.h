@@ -1,7 +1,6 @@
 #ifndef bounding_H_
 #define bounding_H_
 #include "vec3.h"
-#include "triangle.h"
 #include "ray.h"
 #include "mesh.h"
 #include <array>
