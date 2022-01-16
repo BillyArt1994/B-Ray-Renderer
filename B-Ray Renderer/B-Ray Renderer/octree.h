@@ -41,7 +41,7 @@ private:
 	};
 
 	//funaction
-	void OctreeBuild(node* node_ptr,const std::vector<unsigned>& data_ptr, const BoxBounding& bound, const unsigned depth);
+	void OctreeBuild(node* node_ptr, std::vector<GameObject>* gameObject_array_ptr,const std::vector<unsigned>& index_array, const BoxBounding& bound, const unsigned depth);
 
 	node* LookUpNode(const Vec3& pos);
 

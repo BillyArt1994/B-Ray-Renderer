@@ -5,6 +5,7 @@
 #include "light.h"
 #include "bounding.h"
 #include "bmath.h"
+#include "gameObject.h"
 #include <vector>
 
 class Scene {
