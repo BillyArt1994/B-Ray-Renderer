@@ -3,6 +3,7 @@
 #include "vec3.h"
 #include "ray.h"
 #include "mesh.h"
+#include "bmath.h"
 #include <array>
 
 class BoxBounding;

@@ -1,8 +1,11 @@
 #ifndef GAMEOBJECT_H_
 #define GAMEOBJECT_H_
 
-#include "octree.h"
 #include "transform.h"
+#include "bounding.h"
+#include "mesh.h"
+
+class Octree;
 
 class GameObject{
 public:
@@ -27,7 +30,7 @@ public:
 	Mesh mesh_;
 	Bounds* bound_ptr_ = nullptr;
 	Transform transform_;
-	TriangleOctree local_octree_;
+	Octree local_octree_;
 };
 
 #endif // !GAMEOBJECT_H_

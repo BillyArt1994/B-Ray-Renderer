@@ -24,7 +24,7 @@ Mesh::Mesh(const std::string filename) {
 			if (c_line[1] == ' ')
 			{
 				sscanf_s(c_line, "v %f %f %f", &x, &y, &z);
-				vertex_list_.push_back(Vec3(x, y, z));
+				vertex_array_.push_back(Vec3(x, y, z));
 			}
 			if (c_line[1] == 'n')
 			{
@@ -46,9 +46,9 @@ Mesh::Mesh(const std::string filename) {
 				&vertex_index[2], &uv_index[2], &normal_index[2]);
 			for (size_t i = 0; i < 3; i++)
 			{
-				vertex_list_[vertex_index[i]-=1u].uv = texcoordlist[uv_index[i]-=1u];
-				vertex_list_[vertex_index[i]-=1u].normal = normallist[normal_index[i]-=1u];
-				triangle_list_.push_back(vertex_index[i]);
+				vertex_array_[vertex_index[i]-=1u].uv = texcoordlist[uv_index[i]-=1u];
+				vertex_array_[vertex_index[i]-=1u].normal = normallist[normal_index[i]-=1u];
+				triangle_array_.push_back(vertex_index[i]);
 			}
 			break;
 		}

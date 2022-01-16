@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include "vec3.h"
 #include "ray.h"
+#include "octree.h"
 #include "renderParams.h"
 #include "sceneManager.h"
 #include "displayManager.h"
@@ -31,11 +32,14 @@ private:
 	static Color PathTracing(const Ray& r, const unsigned BOUNCE);//Â·¾¶×·×Ùº¯Êý
 	//data
 	unsigned char* buffer_ = nullptr;
-	static Camera* maincamera_;
-	ThreadParams* threadParams_ = nullptr;
+	static Camera* maincamera_ptr_;
+	static ObjctOctree * globaloctree_ptr_;
+	ThreadParams* threadParams_ptr_ = nullptr;
 	DisplayManager* displayManager_ptr_ = nullptr;
+	
 };
 
-Camera* Render::maincamera_ = nullptr;
+Camera* Render::maincamera_ptr_ = nullptr;
+ObjctOctree* Render::globaloctree_ptr_ = nullptr;
 
 #endif // !RENDER_H_

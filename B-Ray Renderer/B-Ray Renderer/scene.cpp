@@ -58,8 +58,8 @@ void Scene::BuildSceneBounding() {
 		y = Max(Max(Abs(maxpoint.y), Abs(minpoint.y)), y);
 		z = Max(Max(Abs(maxpoint.z), Abs(minpoint.z)), z);
 	}
-	const float length = Nearest2Power(Max(x, y, z));
-	scene_bound_ = BoxBounding(Vec3(-length), Vec3(length));
+	const float boundlength = Nearest2Power(Max(x, y, z));
+	scene_bound_ = BoxBounding(Vec3(-boundlength), Vec3(boundlength));
 }
 
 void Scene::BuildGlobalOctree() {
